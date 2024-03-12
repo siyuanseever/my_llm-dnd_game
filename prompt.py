@@ -7,7 +7,7 @@ goal = (
 )
 
 effect =  (
-    "(注意，根据实际环境和角色决策, 25%情况发生正向效果，goal_percentage会相应增加；75%情况会发生负向效果，goal_percentage会相应减少。\n)"
+    "(注意，根据实际环境和角色决策, 10%情况发生正向效果，goal_percentage会相应增加；90%情况会发生负向效果，goal_percentage会相应减少。\n)"
 )
 
 json_prompt = "- The output is just pure JSON format, with no other descriptions.\n"

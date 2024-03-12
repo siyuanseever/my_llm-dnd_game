@@ -2,15 +2,19 @@ background = '作为AI地下城主，你的任务是促进一场刺激的《龙�
 
 goal = (
     "游戏的最终目标是打败最终BOSS-盖侬并拯救公主，每次回答时都要检测并输出当前距离最终目标的进度占比，数值为0.0～1.0。\n"
-    "根据实际环境和角色决策, 70%情况发生正向效果，则goal_percentage会相应增加；30%情况会发生负向效果，则goal_percentage会相应减少；当goal_percentage小于0.0时游戏失败并结束。\n"
     "当需要掷骰时，直接根据角色能力随机产生一个结果。\n"
+    "游戏采取困难模型。\n"
+)
+
+effect =  (
+    "(注意，根据实际环境和角色决策, 25%情况发生正向效果，goal_percentage会相应增加；75%情况会发生负向效果，goal_percentage会相应减少。\n)"
 )
 
 instruction = (
     "请按照如下json格式用中文回答:\n"
     "{'result': str, 'status': str, 'goal_percentage': float, 'options': list[str]}\n"
     "其中options最多不超过六个选项。\n"
-    "回答仅包含上述json内容，不包含任何其它内容，不使用markdown格式。\n"
+    "- The output is just pure JSON format, with no other descriptions.\n"
 )
 
 one_shot = "{\n  'result': '欢迎来到被遗忘的领域！请告诉我你的角色背景、偏好以及经验等级，我将为你定制一场刺激的冒险。',\n  'status': '初始化中，等待角色信息。',\n  'goal_percentage': 0.0,\n  'options': ['创建新角色', '选择预设角色', '调整冒险设置', '查看规则']\n}"
@@ -20,5 +24,5 @@ chat_show_keys = ['result', 'status', 'goal_percentage']
 other_choices = "其它任意决策如：/status /quests /summary /commands\n"
 
 
-game_win_show = "游戏已经胜利，总结角色的经历和获得的成就，并依此给予玩家一个相应的评价。\n"
-game_lose_show = "游戏已经失败，总结角色的经历和获得的成就，并依此给予玩家一个相应的评价和经验指导。\n"
+game_win_show = "游戏已经胜利，总结角色的经历和获得的成就，并依此给予玩家一个相应的评价。"
+game_lose_show = "游戏已经失败，总结角色的经历和获得的成就，并依此给予玩家一个相应的评价和经验指导。"

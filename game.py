@@ -2,21 +2,36 @@ import prompt
 import script
 import llm
 
+import os
+debug = os.environ.get("DEBUG")
+
 GAME_STATUS = {
     "inprogress": 0,
     "win": 1,
     "lose": 2,
 }
 
+def init_game():
+    history = [
+        {"role": "user", "content": 
+            prompt.background + prompt.goal + prompt.effect + prompt.instruction
+        },
+        {"role": "assistant", "content": prompt.one_shot},
+    ]
+    result_json = eval(prompt.one_shot)
 
-def show_status(result_json):
+    return history, result_json
+
+
+def show_status(result_json, show_options=True):
     text = ''
     for key in prompt.chat_show_keys:
         text += f'{key}: {result_json[key]}\n'
-    text += 'options: \n'
-    for i, o in enumerate(result_json['options']):
-        text += f'\t{i}: {o}\n'
-    text += f'\t{prompt.other_choices}'
+    if show_options:
+        text += 'options: \n'
+        for i, o in enumerate(result_json['options']):
+            text += f'\t{i}: {o}\n'
+        text += f'\t{prompt.other_choices}'
     print(text)
 
 
@@ -35,20 +50,29 @@ def update_status(result_json):
     return game_status
 
 
+def reform_choice(choice, result_json):
+    if len(choice) == 0:
+        choice = '0'
+    if script.is_convertible_to_int(choice) and 0 <= int(choice) < len(result_json['options']):
+        choice = result_json['options'][int(choice)]
+    return choice
+
+
 def make_choice(game_status, result_json):
     if game_status == GAME_STATUS["win"]:
         choice = prompt.game_win_show
     elif game_status == GAME_STATUS["lose"]:
         choice = prompt.game_lose_show
     else:
-        choice = input('input number or other text: ')
-        if len(choice) == 0:
-            choice = '0'
-        if script.is_convertible_to_int(choice) and 0 <= int(choice) < len(result_json['options']):
-            choice = result_json['options'][int(choice)]
-        print('=' * 100 + '\n' +  '...***' + choice + '***...')
+        if debug:
+            choice = ''
+        else:
+            choice = input('input number or other text: ')
 
+        choice = reform_choice(choice, result_json)
+        print('=' * 100 + '\n' +  '...***' + choice + '***...')
     return choice
+
 
 def safe_chat(choice, history, max_retry=3):
     retry_num = 0
@@ -57,7 +81,9 @@ def safe_chat(choice, history, max_retry=3):
             history_tmp, answer = llm.chat(choice, history)
             result_json = eval(answer)
             break
-        except:
+        except Exception as e:
+            if debug:
+                print('[warning]', e)
             retry_num += 1
     if retry_num > max_retry:
         print('[error]', history_tmp)

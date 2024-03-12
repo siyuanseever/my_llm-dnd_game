@@ -1,14 +1,10 @@
-import prompt
 import game
 
+def main(debug=False):
+    
+    game_tune = 0
 
-def main():
-    history = [
-        {"role": "user", "content": prompt.background+prompt.goal+prompt.instruction},
-        {"role": "assistant", "content": prompt.one_shot},
-    ]
-    result_json = eval(prompt.one_shot)
-
+    history, result_json = game.init_game()
     while True:
         # show
         game.show_status(result_json)
@@ -22,9 +18,18 @@ def main():
         # chat
         history, result_json = game.safe_chat(choice, history)
             
-        # finish
+        # over
         if game.game_over(game_status):
-            break
+            game.show_status(result_json)
+
+            game_tune += 1
+            if game_tune >= 2:
+                break
+
+            # restart
+            history, result_json = game.init_game()
+
+
 
 
 if __name__ == "__main__":

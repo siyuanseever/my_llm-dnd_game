@@ -1,6 +1,7 @@
 import prompt
 import script
 import llm
+import random
 
 import os
 debug = os.environ.get("DEBUG")
@@ -14,7 +15,7 @@ GAME_STATUS = {
 def init_game():
     history = [
         {"role": "user", "content": 
-            prompt.background + prompt.goal + prompt.effect + prompt.instruction
+            prompt.background + prompt.goal + prompt.instruction
         },
         {"role": "assistant", "content": prompt.one_shot},
     ]
@@ -65,7 +66,7 @@ def make_choice(game_status, result_json):
         choice = prompt.game_lose_show
     else:
         if debug:
-            choice = ''
+            choice = str(random.randint(0, len(result_json['options'])))
         else:
             choice = input('input number or other text: ')
 
@@ -78,7 +79,10 @@ def safe_chat(choice, history, max_retry=3):
     retry_num = 0
     while retry_num <= max_retry:
         try:
-            history_tmp, answer = llm.chat(choice, history)
+            history_tmp, answer = llm.chat(
+                choice + prompt.every_chat_prompt, 
+                history
+            )
             result_json = eval(answer)
             break
         except Exception as e:

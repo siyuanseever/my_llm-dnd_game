@@ -29,12 +29,18 @@ def show_status(result_json, game_step, show_options=True):
     text = ''
     for key in prompt.chat_show_keys:
         text += f'{key}: {result_json[key]}\n'
-    text += f'total_steps: {game_step}/{config.GAME_MAX_STEPS}\n'
+
+    goal_completion_percentage = round(result_json['goal_percentage'] * 100)
+    text += f'goal completion: {goal_completion_percentage}%\n'
+
+    text += f'total steps: {game_step}/{config.GAME_MAX_STEPS}\n'
+
     if show_options:
         text += 'options: \n'
         for i, o in enumerate(result_json['options']):
             text += f'\t{i}: {o}\n'
         text += f'\t{prompt.other_choices}'
+
     print(text)
 
 

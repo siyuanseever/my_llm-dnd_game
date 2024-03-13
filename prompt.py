@@ -22,7 +22,7 @@ instruction = (
 
 one_shot = "{\n  'result': '欢迎来到被遗忘的领域！请告诉我你的角色背景、偏好以及经验等级，我将为你定制一场刺激的冒险。',\n  'status': '初始化中，等待角色信息。',\n  'goal_percentage': 0.0,\n  'options': ['创建新角色', '选择预设角色', '查看规则']\n}"
 
-chat_show_keys = ['result', 'status', 'goal_percentage']
+chat_show_keys = ['result', 'status']
 
 other_choices = "其它任意决策如：/status /quests /summary /commands\n"
 

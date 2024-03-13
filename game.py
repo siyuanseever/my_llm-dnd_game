@@ -1,9 +1,10 @@
+import os
+
 import prompt
 import script
 import llm
-import random
+import config
 
-import os
 debug = os.environ.get("DEBUG")
 
 GAME_STATUS = {
@@ -24,10 +25,11 @@ def init_game():
     return history, result_json
 
 
-def show_status(result_json, show_options=True):
+def show_status(result_json, game_step, show_options=True):
     text = ''
     for key in prompt.chat_show_keys:
         text += f'{key}: {result_json[key]}\n'
+    text += f'total_steps: {game_step}/{config.GAME_MAX_STEPS}\n'
     if show_options:
         text += 'options: \n'
         for i, o in enumerate(result_json['options']):
@@ -36,7 +38,7 @@ def show_status(result_json, show_options=True):
     print(text)
 
 
-def update_status(result_json, goal_score: float = 1.0):
+def update_status(result_json, game_step, goal_score: float = 1.0):
     game_status = GAME_STATUS["inprogress"]
 
     if result_json['goal_percentage'] >= goal_score:
@@ -44,7 +46,7 @@ def update_status(result_json, goal_score: float = 1.0):
         print("🎮🎉🎮 (＾▽＾) (＾▽＾) 🎉🎮🎉")
         print("To be continued~")
         game_status = GAME_STATUS["win"]
-    elif result_json['goal_percentage'] < 0.0:
+    elif result_json['goal_percentage'] < 0.0 or game_step >= config.GAME_MAX_STEPS:
         print("You Lose.")
         game_status = GAME_STATUS["lose"]
 

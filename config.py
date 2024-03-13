@@ -1,0 +1,1 @@
+GAME_MAX_STEPS = 27

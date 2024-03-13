@@ -23,7 +23,7 @@ def main(debug=False):
             game.show_status(result_json)
 
             game_tune += 1
-            if game_tune >= 4:
+            if game_tune >= 2:
                 break
 
             # restart

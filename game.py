@@ -66,7 +66,8 @@ def make_choice(game_status, result_json):
         choice = prompt.game_lose_show
     else:
         if debug:
-            choice = str(random.randint(0, len(result_json['options'])-1))
+            # choice = str(random.randint(0, len(result_json['options'])-1))
+            choice = ''
         else:
             choice = input('input number or other text: ')
 

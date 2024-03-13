@@ -2,7 +2,7 @@ import game
 
 def main(debug=False):
     
-    game_tune = 0
+    game_tune = 1
 
     history, result_json = game.init_game()
     while True:
@@ -10,7 +10,7 @@ def main(debug=False):
         game.show_status(result_json)
 
         # status
-        game_status = game.update_status(result_json)
+        game_status = game.update_status(result_json, goal_score=float(game_tune))
         
         # choice
         choice = game.make_choice(game_status, result_json)
@@ -23,11 +23,11 @@ def main(debug=False):
             game.show_status(result_json)
 
             game_tune += 1
-            if game_tune >= 1:
+            if game_tune >= 4:
                 break
 
             # restart
-            history, result_json = game.init_game()
+            # history, result_json = game.init_game()
 
 
 

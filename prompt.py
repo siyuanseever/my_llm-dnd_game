@@ -7,7 +7,7 @@ goal = (
 )
 
 effect =  (
-    "(注意，根据实际环境和角色决策, 10%情况发生正向效果，goal_percentage会相应增加；90%情况会发生负向效果，goal_percentage会相应减少。\n)"
+    "(注意，根据实际环境和角色决策, 只有1%情况发生正向效果，goal_percentage会相应增加；99%情况会发生负向效果，goal_percentage会相应减少。\n)"
 )
 
 json_prompt = "- The output is just pure JSON format, with no other descriptions.\n"
@@ -20,7 +20,7 @@ instruction = (
     "其中options最多不超过六个选项。\n"
 ) + json_prompt
 
-one_shot = "{\n  'result': '欢迎来到被遗忘的领域！请告诉我你的角色背景、偏好以及经验等级，我将为你定制一场刺激的冒险。',\n  'status': '初始化中，等待角色信息。',\n  'goal_percentage': 0.0,\n  'options': ['创建新角色', '选择预设角色', '调整冒险设置', '查看规则']\n}"
+one_shot = "{\n  'result': '欢迎来到被遗忘的领域！请告诉我你的角色背景、偏好以及经验等级，我将为你定制一场刺激的冒险。',\n  'status': '初始化中，等待角色信息。',\n  'goal_percentage': 0.0,\n  'options': ['创建新角色', '选择预设角色', '查看规则']\n}"
 
 chat_show_keys = ['result', 'status', 'goal_percentage']
 

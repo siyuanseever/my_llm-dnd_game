@@ -36,10 +36,10 @@ def show_status(result_json, show_options=True):
     print(text)
 
 
-def update_status(result_json):
+def update_status(result_json, goal_score: float = 1.0):
     game_status = GAME_STATUS["inprogress"]
 
-    if result_json['goal_percentage'] >= 1.0:
+    if result_json['goal_percentage'] >= goal_score:
         print("GG~")
         print("🎮🎉🎮 (＾▽＾) (＾▽＾) 🎉🎮🎉")
         print("To be continued~")
@@ -66,7 +66,7 @@ def make_choice(game_status, result_json):
         choice = prompt.game_lose_show
     else:
         if debug:
-            choice = str(random.randint(0, len(result_json['options'])))
+            choice = str(random.randint(0, len(result_json['options'])-1))
         else:
             choice = input('input number or other text: ')
 

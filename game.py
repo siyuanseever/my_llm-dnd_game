@@ -15,7 +15,7 @@ GAME_STATUS = {
 
 def init_game():
     history = [
-        {"role": "user", "content": 
+        {"role": "system", "content": 
             prompt.background + prompt.goal + prompt.instruction
         },
         {"role": "assistant", "content": prompt.one_shot},
@@ -99,9 +99,7 @@ def safe_chat(choice, history, max_retry=3):
                 print('[warning]', e)
             retry_num += 1
     if retry_num > max_retry:
-        print('[error]', history_tmp)
-        print('[error]', answer)
-        print('[error]')
+        print('[error] max retry chat')
         assert False
     else:
         history = history_tmp

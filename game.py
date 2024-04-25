@@ -1,4 +1,5 @@
 import os
+import time
 
 import prompt
 import script
@@ -84,7 +85,7 @@ def make_choice(game_status, result_json):
     return choice
 
 
-def safe_chat(choice, history, max_retry=3):
+def safe_chat(choice, history, max_retry=10):
     retry_num = 0
     while retry_num <= max_retry:
         try:
@@ -97,6 +98,9 @@ def safe_chat(choice, history, max_retry=3):
         except Exception as e:
             if debug:
                 print('[warning]', e)
+                if e.__str__().startswith('429'):
+                    print('\tsleep 10s')
+                    time.sleep(10)
             retry_num += 1
     if retry_num > max_retry:
         print('[error] max retry chat')

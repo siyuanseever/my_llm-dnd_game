@@ -86,8 +86,8 @@ class GeminiChat(BaseChat):
         message = {"role": "assistant", "content": response.text}
         return message
 
-# chat = GLMChat().chat
-chat = GeminiChat().chat
+chat = GLMChat().chat
+# chat = GeminiChat().chat
 
 if __name__ == "__main__":
     response = chat("你好")

@@ -1,6 +1,6 @@
-My DnD Game
+# My DnD Game
 
-To start
+## To start
 
 ```bash
 pip install zhipuai
@@ -318,3 +318,9 @@ options:
         其它任意决策如：/status /quests /summary /commands
     </pre>
 </details>
+
+
+## Documents
+* [My LLM + D&D Game](https://zhuanlan.zhihu.com/p/692183088)
+
+![D&D](./assets/dnd.png)
